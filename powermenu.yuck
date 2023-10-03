@@ -1,0 +1,33 @@
+(defwidget _buttons [shutdown shutdown_icon reboot
+  reboot_icon logout logout_icon]
+  (box :class "btns-box card" :spacing 15
+    :orientation "vertical"
+    :halign "center"
+    :focusable true
+    (button :active true :focusable true :onclick logout logout_icon)
+    (button :active true :focusable true :onclick reboot reboot_icon)
+    (button :active true :focusable true :class "shutdown" :onclick shutdown shutdown_icon)
+  ))
+
+(defwindow powermenu
+  :monitor 0
+  :stacking "fg"
+  :windowtype "normal"
+  :exclusive true
+  :focusable true
+  :halign "center"
+  :geometry (
+    geometry :width "3%" :height "18%"
+    :y "77%"
+    :x "0.5%"
+  )
+  (eventbox
+    ;TODO: add temp bind to hypr
+    ; remember to remote with hover lost too
+    :onhoverlost "eww close powermenu"
+  (box :class "powermenu"
+    (_buttons :shutdown "poweroff" :reboot "reboot"
+      :logout "loginctl kill-session self"
+      :shutdown_icon "" :reboot_icon "󰜉"
+    :logout_icon "󰍃")))
+)

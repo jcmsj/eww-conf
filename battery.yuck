@@ -1,0 +1,21 @@
+(defwidget battery []
+  (_battery :status {EWW_BATTERY.BAT1.status}
+    :battery {EWW_BATTERY.BAT1.capacity}
+    :charge "󱐋"
+    ;;:icons '{"on_power":["󱃍" "󰁺" "󰁼" "󰁽" "󰁾" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"]}')
+  ))
+
+(defwidget _battery [status charge battery]
+  (box :class "card battery" :spacing 6
+    (label :text {status == 'Charging' ? charge:'' +
+      battery < 6 ? "󱃍":
+      battery < 11 ? "󰁺" :
+      battery < 21 ? "󰁻" :
+      battery < 31 ? "󰁼" :
+      battery < 41 ? "󰁽" :
+      battery < 51 ? "󰁾" :
+      battery < 61 ? "󰁿" :
+      battery < 71 ? "󰂀" :
+      battery < 81 ? "󰂁" :
+    battery < 91 ? "󰂂" : "󰁹"})
+    (label :class "percentage" :text " ${battery}%")))

@@ -1,0 +1,20 @@
+(deflisten workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
+(defwidget workspace_button [index ?active]
+  (button :class "${active}" :onclick "hyprctl dispatch workspace ${index}" index))
+
+; Scroll wheel:
+;   (eventbox
+; :onscroll "echo {} | sed -e \"s/up/-1/g\" -e \"s/down/+1/g\" | xargs hyprctl dispatch workspace")
+(defwidget _workspaces []
+  (box :class "workspaces"
+    :orientation "h"
+    :space-evenly true
+    :halign "start"
+    :spacing 10
+    (for wsp in {["1","2","3","4","5","6","7","9"]}
+      (workspace_button :index wsp :active {wsp == workspace ? "active":""})
+    )
+  ))
+
+(defwidget workspaces []
+  (_workspaces))

@@ -1,0 +1,29 @@
+(defpoll strength :interval "10s"
+  :initial ``
+  `nmcli -t -f SIGNAL,ACTIVE device wifi \
+  | awk -F':' '{if($2=="yes")print$1}h'`)
+
+(defvar icons
+`{"0":"󰤯","1":"󰤟","2":"󰤥","3":"󰤥","4":""}`)
+
+(defwidget _network [offline]
+  (box :class "card network"
+  :valign "center"
+  :halign "start"
+    (button
+      ;:onclick "nm-applet --indicator"
+      ;TODO: wait for systray PR:
+      ; see https://github.com/elkowar/eww/pull/743
+      :tooltip "Strength: ${strength}"
+      (label :text {
+      strength == "" ? offline :
+      strength < 21 ? icons["0"] :
+      strength < 41 ? icons["1"] :
+      strength < 61 ? icons["2"] :
+      strength < 81 ? icons["3"] : icons["4"]}
+    ))))
+
+(defwidget network []
+  (_network
+    :strength strength
+  :offline "󰤭"))

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+echo $(hyprctl activeworkspace -j | jq '.id')
+# from: https://wiki.hyprland.org/Useful-Utilities/Status-Bars/#eww
+socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - |
+  stdbuf -o0 awk -F '>>|,' -e '/^workspace>>/ {print $2}' -e '/^focusedmon>>/ {print $3}'

@@ -1,0 +1,58 @@
+(defwindow config
+  :monitor 0
+  :stacking "fg"
+  :namespace "eww"
+  :exclusive true
+  :hexpand false
+  :focusable true
+  :geometry (
+    geometry :width "12%" :height "18%"
+    :y "80%"
+    :x "87.5%"
+  )
+  (eventbox
+    :onhoverlost "eww close config"
+    (box :orientation "v"
+      :class "card config"
+      :spacing 6
+      :space-evenly true
+      :valign "center"
+      (volume_ctl)
+      ; for testing:
+      ;(metric :label "X" :value sample :onchange "eww update sample={}")
+      (light_ctl))))
+(defvar sample 0)
+(defwidget config_btn []
+  (box :class "card config_menu"
+    (button :onclick "eww open --toggle config"
+      (label :text ""))))
+
+(defwidget metric [label value onchange]
+  (box :orientation "h"
+    :class "metric"
+    :space-evenly false
+    :spacing 15
+    :halign "start"
+    (label :text label)
+    (scale :min 0
+      :max 101
+      :active {onchange != ""}
+      :value value
+    :onchange onchange)
+    (label :class "percent" :limit-width 4 :text "${value}%")
+  ))
+
+
+(defwidget volume_ctl []
+  (metric :label ""
+    :value volume
+  :onchange "amixer -D pipewire sset Master {}%; scripts/update-vol"))
+
+(defvar brightness 1)
+(defwidget light_ctl []
+  (metric :label "󰃟"
+    :value brightness
+    :onchange "brightnessctl set {}%; scripts/update-brightness"
+  ))
+
+(defvar volume 0)

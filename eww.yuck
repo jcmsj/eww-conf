@@ -1,0 +1,53 @@
+(include "./clock.yuck")
+(include "./battery.yuck")
+(include "./network.yuck")
+(include "./powermenu.yuck")
+(include "./workspaces.yuck")
+(include "./config.yuck")
+
+(defwindow bar
+  :monitor 0
+  :stacking "fg"
+  :namespace "eww"
+  :exclusive true
+  :geometry (geometry
+    :width "99%"
+    :height "5%"
+  :anchor "bottom center")
+  (box :class "topbar"
+    :orientation "horizontal"
+    (leftParts)
+    (middle)
+    (rightParts)))
+(defwidget middle []
+  (box :orientation "horizontal"
+    :valign "center"
+    :halign "center"
+    (label :text "middle")))
+
+(defwidget leftParts []
+  (box  :orientation "horizontal"
+    :class "card"
+    :space-evenly false
+    :spacing 20
+    :valign "center"
+    :halign "start"
+    (menu)
+    (workspaces)))
+
+(defwidget rightParts []
+  (box  :orientation "horizontal"
+    :valign "center"
+    :halign "end"
+    :space-evenly false
+    :spacing 10
+    (network)
+    (battery)
+    (clock)
+    (config_btn)))
+
+(defwidget menu []
+  (box
+    :orientation "horizontal"
+    :class "card"
+    (button  :onclick "eww open --toggle powermenu" "" )))

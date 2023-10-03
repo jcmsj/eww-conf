@@ -1,0 +1,30 @@
+(defpoll time :interval "5s"
+  :initial `date +'{"hour":"%I","min":"%M","period":"%p"}'`
+`date +'{"hour":"%I","min":"%M","period":"%p"}'`)
+
+(defwidget clock []
+  (eventbox
+    :onclick "eww open --toggle calen"
+    (box :class "card clock" :spacing 5 :space-evenly false
+      :valign "end" :halign "end"
+      (label :class "hour" :text "${time.hour}")
+      (label :class "colon" :text ":" )
+      (label :class "min" :text "${time.min}")
+      (label :class "period" :text " ${time.period}")
+    )
+  ))
+
+(defwindow calen
+  :monitor 0
+  :stacking "fg"
+  :windowtype "normal"
+  :exclusive true
+  :geometry (
+    geometry :width "3%" :height "18%"
+    :y "77%"
+    :x "86%"
+  )
+  (box :class "card calen"
+  (calendar)
+  )
+)
