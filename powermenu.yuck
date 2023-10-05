@@ -14,7 +14,7 @@
   :stacking "fg"
   :windowtype "normal"
   :exclusive true
-  :focusable true
+  ; :focusable true
   :halign "center"
   :geometry (
     geometry :width "3%" :height "18%"

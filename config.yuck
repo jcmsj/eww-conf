@@ -3,36 +3,51 @@
   :stacking "fg"
   :namespace "eww"
   :exclusive true
-  :hexpand false
-  :focusable true
+  ;focusable true
   :geometry (
-    geometry :width "12%" :height "18%"
-    :y "80%"
+    geometry :width "12%" :height "20%"
+    :y "79.5%"
     :x "87.5%"
   )
   (eventbox
-    :onhoverlost "eww close config"
-    (box :orientation "v"
-      :class "card config"
-      :spacing 6
-      :space-evenly true
-      :valign "center"
-      (volume_ctl)
-      ; for testing:
-      ;(metric :label "X" :value sample :onchange "eww update sample={}")
-      (light_ctl))))
-(defvar sample 0)
+    ;:onhoverlost "eww close config"
+    (box :orientation "v"   :class "card"
+      :space-evenly false
+      :halign "fill"
+      :valign "end"
+      :spacing 4
+      (box :orientation "v" :class "config"
+        :halign "start"
+        :spacing 6
+        (volume_ctl)
+        (light_ctl)
+        ; for testing:
+        ;(metric :label "X" :value sample :onchange "eww update sample={}")
+      )
+      (config_closer :halign "end")
+    )))
+(defvar sample 50)
+(defvar ones 1)
+  (defvar tens 10)
+
 (defwidget config_btn []
+  (button :onclick "eww open --toggle config"
+  (label :text "")))
+
+(defwidget config_closer [halign]
+  (box :class "config_menu" :halign halign
+   (config_btn)))
+
+; Standlone button in the bar
+(defwidget config_opener []
   (box :class "card config_menu"
-    (button :onclick "eww open --toggle config"
-      (label :text ""))))
+    (config_btn)))
 
 (defwidget metric [label value onchange]
   (box :orientation "h"
     :class "metric"
     :space-evenly false
     :spacing 15
-    :halign "start"
     (label :text label)
     (scale :min 0
       :max 101
