@@ -1,4 +1,4 @@
-(defpoll time :interval "5s"
+(defpoll time :interval "10s"
   :initial `date +'{"hour":"%I","min":"%M","period":"%p"}'`
 `date +'{"hour":"%I","min":"%M","period":"%p"}'`)
 
