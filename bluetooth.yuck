@@ -1,0 +1,25 @@
+; (defwindow bt_menu
+  ;     :monitor 0
+  ;     :stacking "fg"
+  ;     :namespace "eww"
+  ;     :exclusive true
+  ;     :geometry (geometry
+    ;       :width "70%"
+  ;       :height "55%")
+  
+  ;     (box
+    ;         ; (label :text "󰂯")
+    ;         (label :text "${state}")))
+
+; (defwindow)
+; (defvar bt_state 0)
+(defpoll bt_state 
+  :interval "1s" 
+  :initial 0
+  :run-while config_menu_is_visible
+  "scripts/bt/stat")
+
+(defwidget bt_indicator []
+  (button :onclick "scripts/bt/toggle ${bt_state}" 
+    (label :text {bt_state == 1 ? "󰂯":"󰂲"})
+  ))

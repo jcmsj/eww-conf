@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+status=$(./stat)
+eww update bt_state="$status"

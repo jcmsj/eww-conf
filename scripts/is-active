@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# is_active <window name> <string>
+windows=$(./list-active)
+if [[ "$windows" =~ $1 ]]; then
+  # Output 1 if the argument is found
+  echo 1
+else
+  # Output 0 if the argument is not found
+  echo 0
+fi

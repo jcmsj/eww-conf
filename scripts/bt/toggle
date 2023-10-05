@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+if [ $1 -eq 0 ]; then
+    # echo "on"
+   bluetoothctl power on
+   ./reconnect
+else
+    # echo "off"
+    bluetoothctl power off
+fi

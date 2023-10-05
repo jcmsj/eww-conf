@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+bluetoothctl devices | awk '{print $2}' | while read -r mac_id; do
+    bluetoothctl connect $mac_id | while read -r state; do
+        echo $state
+        if [ "$tate" == "Connection successful" ]; then
+            # echo "ended early"
+            exit 0
+        fi
+    done
+done

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+echo $(eww windows | sed -n '/^\*/s/^\*//p')

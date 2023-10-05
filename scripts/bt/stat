@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# echo 0
+status=$(bluetoothctl show | grep "Powered: y")
+if [ -z "$status" ]; then
+  echo 0
+else
+  echo 1
+fi

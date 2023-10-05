@@ -1,3 +1,5 @@
+(include "./bluetooth.yuck")
+
 (defwindow config
   :monitor 0
   :stacking "fg"
@@ -24,24 +26,30 @@
         ; for testing:
         ;(metric :label "X" :value sample :onchange "eww update sample={}")
       )
-      (config_closer :halign "end")
-    )))
-(defvar sample 50)
-(defvar ones 1)
-  (defvar tens 10)
+      (box :class "bottom-row config_menu" :halign "end"
+        :space-evenly false
+        :spacing 15
+        (bt_indicator)
+        (config_closer)
+      ))))
 
+; (defvar sample 50)
+; (defvar ones 1)
+; (defvar tens 10)
+(defvar config_menu_is_visible 0)
+
+  (defwidget config_closer []
+    (button :onclick  "eww update config_menu_is_visible=0 && eww open --toggle config"
+      (label :text "")))
 (defwidget config_btn []
-  (button :onclick "eww open --toggle config"
-  (label :text "")))
-
-(defwidget config_closer [halign]
-  (box :class "config_menu" :halign halign
-   (config_btn)))
+  (button :onclick  "eww update config_menu_is_visible=1 && eww open --toggle config"
+    (label :text "")))
 
 ; Standlone button in the bar
 (defwidget config_opener []
   (box :class "card config_menu"
-    (config_btn)))
+      (config_btn)
+  ))
 
 (defwidget metric [label value onchange]
   (box :orientation "h"
@@ -56,7 +64,6 @@
     :onchange onchange)
     (label :class "percent" :limit-width 4 :text "${value}%")
   ))
-
 
 (defwidget volume_ctl []
   (metric :label ""
