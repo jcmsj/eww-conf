@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-vol=$(amixer -D pipewire sget Master | awk -F '[^0-9]+' '/Left:/{print $3}')
+vol=$(./get-vol)
 eww update volume="$vol"

@@ -2,10 +2,10 @@
 
 (defwindow config
   :monitor 0
-  :stacking "fg"
+  :stacking "overlay"
   :namespace "eww"
   :exclusive true
-  ;focusable true
+  ; :focusable true
   :geometry (
     geometry :width "12%" :height "20%"
     :y "79.5%"
@@ -38,17 +38,18 @@
 ; (defvar tens 10)
 (defvar config_menu_is_visible 0)
 
-  (defwidget config_closer []
-    (button :onclick  "eww update config_menu_is_visible=0 && eww open --toggle config"
-      (label :text "")))
+(defwidget config_closer []
+  (button :onclick  "eww update config_menu_is_visible=0 && eww open-many --toggle config closer"
+    (label :text "")))
+
 (defwidget config_btn []
-  (button :onclick  "eww update config_menu_is_visible=1 && eww open --toggle config"
+  (button :onclick  "eww update config_menu_is_visible=1 && ./lib/open config"
     (label :text "")))
 
 ; Standlone button in the bar
 (defwidget config_opener []
   (box :class "card config_menu"
-      (config_btn)
+    (config_btn)
   ))
 
 (defwidget metric [label value onchange]
@@ -68,13 +69,22 @@
 (defwidget volume_ctl []
   (metric :label ""
     :value volume
-  :onchange "amixer -D pipewire sset Master {}%; scripts/update-vol"))
+  :onchange "amixer -D pipewire sset Master {}%;"))
 
-(defvar brightness 1)
 (defwidget light_ctl []
   (metric :label "󰃟"
     :value brightness
-    :onchange "brightnessctl set {}%; scripts/update-brightness"
+    :onchange "brightnessctl set {}%;"
   ))
 
-(defvar volume 0)
+(defpoll brightness
+  :run-while config_menu_is_visible
+  :initial 0
+  :interval "300ms"
+"scripts/get-brightness")
+
+(defpoll volume
+  :initial 0
+  :interval "300ms"; ms
+  :run-while config_menu_is_visible
+"scripts/get-vol")

@@ -4,7 +4,8 @@
 (include "./powermenu.yuck")
 (include "./workspaces.yuck")
 (include "./config.yuck")
-; (include "./bluetooth.yuck")
+(include "./music.yuck")
+
 (defwindow bar
   :monitor 0
   :stacking "fg"
@@ -15,15 +16,16 @@
     :height "5%"
   :anchor "bottom center")
   (box :class "topbar"
-    :orientation "horizontal"
+  :orientation "horizontal"
     (leftParts)
     (middle)
     (rightParts)))
 (defwidget middle []
   (box :orientation "horizontal"
+  :hexpand "full"
     :valign "center"
     :halign "center"
-    (label :text "middle")))
+    (music)))
 
 (defwidget leftParts []
   (box  :orientation "horizontal"
@@ -32,7 +34,7 @@
     :spacing 20
     :valign "center"
     :halign "start"
-    (menu)
+    (powermenu-opener)
     (workspaces)))
 
 (defwidget rightParts []
@@ -46,8 +48,3 @@
     (clock)
     (config_opener)))
 
-(defwidget menu []
-  (box
-    :orientation "horizontal"
-    :class "card"
-    (button  :onclick "eww open --toggle powermenu" "" )))

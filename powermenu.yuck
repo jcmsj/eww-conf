@@ -1,3 +1,5 @@
+(include "./lib/closer.yuck")
+
 (defwidget _buttons [shutdown shutdown_icon reboot
   reboot_icon logout logout_icon]
   (box :class "btns-box card" :spacing 15
@@ -12,7 +14,7 @@
 (defwindow powermenu
   :monitor 0
   :stacking "fg"
-  :windowtype "normal"
+  :namespace "eww"
   :exclusive true
   ; :focusable true
   :halign "center"
@@ -24,10 +26,12 @@
   (eventbox
     ;TODO: add temp bind to hypr
     ; remember to remote with hover lost too
-    :onhoverlost "eww close powermenu"
-  (box :class "powermenu"
-    (_buttons :shutdown "poweroff" :reboot "reboot"
-      :logout "loginctl kill-session self"
-      :shutdown_icon "" :reboot_icon "󰜉"
-    :logout_icon "󰍃")))
+    (box :class "powermenu"
+      (_buttons :shutdown "poweroff" :reboot "reboot"
+        :logout "loginctl kill-session self"
+        :shutdown_icon "" :reboot_icon "󰜉"
+      :logout_icon "󰍃")))
 )
+
+(defwidget powermenu-opener []
+  (button :onclick "./lib/open powermenu" "" ))

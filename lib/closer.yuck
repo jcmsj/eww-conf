@@ -1,0 +1,19 @@
+; Based on https://github.com/elkowar/eww/issues/472#issuecomment-1146860335
+(defwidget closer [window]
+  (eventbox 
+    :onclick "eww close ${window} && eww close closer && eww update closable-window=\"\"" ))
+
+(defvar closable-window "")
+
+(defwindow closer
+  :monitor 0
+  :geometry (
+    geometry
+    :width "100%"
+  :height "100%")
+  :namespace "ewww"
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  (closer :window "${closable-window}")
+)

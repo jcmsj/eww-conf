@@ -1,0 +1,10 @@
+(defwidget music []
+  (box :class "music card"
+    :orientation "h"
+    :space-evenly false
+    ;TODO handle overflow
+  {music != "" ? "💿 ${substring(music, 0, 30)}" : ""}))
+
+(deflisten music :initial ""
+; "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+"playerctl --follow metadata --format '{{ title }}' || true")

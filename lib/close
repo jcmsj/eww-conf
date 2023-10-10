@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+eww open-many --toggle closer $1
+eww update closable-window=""
