@@ -13,7 +13,7 @@
 
 (defwindow powermenu
   :monitor 0
-  :stacking "fg"
+  :stacking "overlay"
   :namespace "eww"
   :exclusive true
   ; :focusable true
@@ -34,4 +34,4 @@
 )
 
 (defwidget powermenu-opener []
-  (button :onclick "./lib/open powermenu" "" ))
+  (button :onclick "lib/open powermenu" "" ))
