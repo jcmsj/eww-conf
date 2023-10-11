@@ -2,11 +2,16 @@
   :initial `date +'{"hour":"%I","min":"%M","period":"%p"}'`
 `date +'{"hour":"%I","min":"%M","period":"%p"}'`)
 
+(defpoll date :interval "4h"
+  :initial `date +'{"month_name":"%b","month:"%m","day":"%d","year":"%Y"}'`
+  `date +'{"month_name":"%b","month":"%m","day":"%d","year":"%Y"}'`)
+
 (defwidget clock []
   (eventbox
     :onclick "eww open --toggle calen"
     (box :class "card clock" :spacing 5 :space-evenly false
       :valign "end" :halign "end"
+      :tooltip "${date.month_name} ${date.day}"
       (label :class "hour" :text "${time.hour}")
       (label :class "colon" :text ":" )
       (label :class "min" :text "${time.min}")
@@ -14,17 +19,24 @@
     )
   ))
 
+(defwidget date []
+  (label :text "${date.month}/${date.day}")
+)
 (defwindow calen
   :monitor 0
   :stacking "fg"
   :windowtype "normal"
   :exclusive true
   :geometry (
-    geometry :width "3%" :height "18%"
-    :y "77%"
+    geometry :width "3%" :height "20%"
+    :y "75%"
     :x "86%"
   )
   (box :class "card calen"
-  (calendar)
+    :orientation "v"
+    :valign "center"
+    :space-evenly false
+    (calendar)
+    (date)
   )
 )

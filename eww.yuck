@@ -16,13 +16,12 @@
     :height "5%"
   :anchor "bottom center")
   (box :class "topbar"
-  :orientation "horizontal"
+    :orientation "horizontal"
     (leftParts)
     (middle)
     (rightParts)))
 (defwidget middle []
   (box :orientation "horizontal"
-  :hexpand "full"
     :valign "center"
     :halign "center"
     (music)))

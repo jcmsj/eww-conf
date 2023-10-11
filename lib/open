@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 if [[ -n "$1" ]]; then
-    eww update closable-window="$1"
-    eww open-many --toggle closer $1 # Open the closer first
+    eww update closable-window="$1" &&
+    eww open --toggle closer &&
+    eww open --toggle $1  # Open the closer first
 fi
 # else pass
