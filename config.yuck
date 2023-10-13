@@ -7,9 +7,9 @@
   :exclusive true
   ; :focusable true
   :geometry (
-    geometry :width "12%" :height "20%"
-    :y "79.5%"
-    :x "87.5%"
+    geometry :width "12%" :height "22%"
+    :y "78%"
+    :x "88%"
   )
   (eventbox
     ;:onhoverlost "eww close config"
