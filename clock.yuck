@@ -10,7 +10,6 @@
   (eventbox
     :onclick "eww open --toggle calen"
     (box :class "card clock" :spacing 5 :space-evenly false
-      :valign "end" :halign "end"
       :tooltip "${date.month_name} ${date.day}"
       (label :class "hour" :text "${time.hour}")
       (label :class "colon" :text ":" )
@@ -29,8 +28,8 @@
   :exclusive true
   :geometry (
     geometry :width "3%" :height "20%"
-    :y "75%"
-    :x "86%"
+    :y "73%"
+    :x "86.5%"
   )
   (box :class "card calen"
     :orientation "v"

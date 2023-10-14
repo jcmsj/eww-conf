@@ -8,7 +8,6 @@
 
 (defwidget _network [offline]
   (box :class "card network"
-    :valign "center"
     :halign "start"
     (button
       :onclick "hyprctl dispatch exec nm-connection-editor"

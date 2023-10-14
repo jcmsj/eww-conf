@@ -7,8 +7,8 @@
     :orientation "h"
     :space-evenly true
     :halign "start"
-    :spacing 10
-    (for wsp in {["1","2","3","4","5","6","7","9"]}
+    :spacing 8
+    (for wsp in {["1","2","3","4","5","6","7","8","9"]}
       (workspace_button :index wsp :active {wsp == workspace ? "active":""})
     )
   ))

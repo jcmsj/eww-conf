@@ -7,12 +7,11 @@
   :exclusive true
   ; :focusable true
   :geometry (
-    geometry :width "12%" :height "22%"
+    geometry :width "14%" :height "22%"
     :y "78%"
-    :x "88%"
+    :x "86%"
   )
   (eventbox
-    ;:onhoverlost "eww close config"
     (box :orientation "v"   :class "card"
       :space-evenly false
       :halign "fill"
@@ -21,6 +20,7 @@
       (box :orientation "v" :class "config"
         :halign "start"
         :spacing 6
+        (ram_usage)
         (volume_ctl)
         (light_ctl)
         ; for testing:
@@ -52,28 +52,31 @@
     (config_btn)
   ))
 
-(defwidget metric [label value onchange]
+(defwidget metric [label value onchange ?tooltip]
   (box :orientation "h"
     :class "metric"
     :space-evenly false
     :spacing 15
+    :tooltip "${tooltip}"
     (label :text label)
     (scale :min 0
       :max 101
       :active {onchange != ""}
       :value value
     :onchange onchange)
-    (label :class "percent" :limit-width 4 :text "${value}%")
+    (label :class "percent" :limit-width 7 :text "${value}%")
   ))
 
 (defwidget volume_ctl []
   (metric :label ""
     :value volume
+    :tooltip "Volume"
   :onchange "amixer -D pipewire sset Master {}%;"))
 
 (defwidget light_ctl []
   (metric :label "󰃟"
     :value brightness
+    :tooltip "Screen brightness"
     :onchange "brightnessctl set {}%;"
   ))
 
@@ -88,3 +91,8 @@
   :interval "300ms"; ms
   :run-while config_menu_is_visible
 "scripts/get-vol")
+
+(defwidget ram_usage []
+  (metric :label "󰍛" :tooltip "RAM Usage"
+    :value {round(EWW_RAM.used_mem_perc, 1)}
+  :onchange ""))
