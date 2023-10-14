@@ -1,13 +1,35 @@
+(deflisten music :initial ""
+"playerctl --follow metadata --format '{{ title }}' || false")
+
+(deflisten player_status :initial ""
+  `playerctl status --follow`
+)
+
 (defwidget music []
+  (revealer
+    :reveal {music != ""}
   (box :class {music == "" ? "":"music card"}
     :space-evenly false
     :halign "center"
     :tooltip "${music}"
-    ;TODO handle overflow
-    (label 
-      :limit-width 23 
-      :text {music == "" ? "":"💿 ${music}"})))
-
-(deflisten music :initial ""
-; "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
-"playerctl --follow metadata --format '{{ title }}' || false")
+    :spacing 20
+    ; (button
+      ;   :onclick ""
+      ;   (label :text "󰅃")
+    ; )
+    (button
+      :onclick "playerctl previous"
+      (label :text "󰙣")
+    )
+    (button
+      :class "player-status"
+      :onclick "playerctl play-pause"
+      (label :text {player_status == "Playing" ? "󰏥": "󰐌"}))
+    (button
+      :onclick "playerctl next"
+      (label :text "󰙡")
+    )
+    (label
+      :limit-width 20
+    :text {music == "" ? "":"${music}"})
+  )))
