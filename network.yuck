@@ -4,7 +4,7 @@
   | awk -F':' '{if($2=="yes")print$1}h'`)
 
 (defvar icons
-`{"0":"󰤯","1":"󰤟","2":"󰤥","3":"󰤥","4":""}`)
+`{"0":"󰤯","1":"󰤟","2":"󰤥","3":"󰤥","4":"󰤨"}`)
 
 (defwidget _network [offline]
   (box :class "card network"

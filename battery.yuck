@@ -6,7 +6,9 @@
   ))
 
 (defwidget _battery [status charge battery]
-  (box :class "card battery" :spacing 6
+  (box :class "card battery"
+  :space-evenly false
+  :spacing 10
     (label :text {status == 'Charging' ? charge:'' + (
       battery < 6 ? "󱃍":
       battery < 11 ? "󰁺" :
