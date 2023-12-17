@@ -20,6 +20,7 @@
       (box :orientation "v" :class "config"
         :halign "start"
         :spacing 6
+        (root_usage)
         (ram_usage)
         (volume_ctl)
         (light_ctl)
@@ -52,7 +53,7 @@
     (config_btn)
   ))
 
-(defwidget metric [label value onchange ?tooltip]
+(defwidget metric [label value onchange ?tooltip ?rightlabel]
   (box :orientation "h"
     :class "metric"
     :space-evenly false
@@ -64,7 +65,7 @@
       :active {onchange != ""}
       :value value
     :onchange onchange)
-    (label :class "percent" :limit-width 7 :text "${value}%")
+    (label :class "percent" :limit-width 7 :text "${rightlabel ?: '${value}%'}")
   ))
 
 (defwidget volume_ctl []
@@ -93,6 +94,17 @@
 "scripts/get-vol")
 
 (defwidget ram_usage []
-  (metric :label "󰍛" :tooltip "RAM Usage"
+  (metric 
+    :label "󰍛" 
+    :tooltip "RAM Usage"
     :value {round(EWW_RAM.used_mem_perc, 1)}
   :onchange ""))
+
+(defwidget root_usage []
+  (metric
+    :label ""
+    :tooltip "root drive"
+    :value {round(EWW_DISK['/'].used_perc,1)}
+    :onchange ""
+  )
+)
