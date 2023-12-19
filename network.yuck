@@ -1,37 +1,29 @@
 (defpoll strength :interval "10s"
   :initial ``
-  `wpa_cli signal_poll | \
-  awk -F'=' '/^RSSI=/ {print $2}'`)
+  `nmcli -t -f SIGNAL,ACTIVE device wifi \
+  | awk -F':' '{if($2=="yes")print$1}h'`)
 
 (defvar icons
-`{"0":"󰤯","1":"󰤟","2":"󰤥","3":"󰤥","4":"󰤨","5":"󰤮"}`)
-; Original FM RSSI levels:
-; 0: offline
-; 1 - 9: very low
-; 10 - 19: low
-; 20 - 29: good
-; 30 - 39: very good
-; 40 - 45: excellent
-; I decreased it by 4
-(defwidget _network []
+`{"0":"󰤯","1":"󰤟","2":"󰤥","3":"󰤥","4":"󰤨"}`)
+
+(defwidget _network [offline]
   (box :class "card network"
     :halign "start"
     (button
-      :onclick "hyprctl dispatch exec wpa_gui"
+      :onclick "hyprctl dispatch exec nm-connection-editor"
       ;:onclick "nm-applet --indicator"
       ;TODO: wait for systray PR:
       ; see https://github.com/elkowar/eww/pull/743
       :tooltip "Strength: ${strength}"
       (label :text {
-        strength == 0 ? 'icons["5"]' : ; offline
-        strength < -30 ? icons["4"] : ; excellent
-        strength < -20 ? icons["3"] : ; very good
-        strength < -10 ? icons["2"] : ; good
-        strength < 0 ? icons["1"] : ; low or 
-        icons["0"] ; very low
-      }
+        strength == "" ? offline :
+        strength < 21 ? icons["0"] :
+        strength < 41 ? icons["1"] :
+        strength < 61 ? icons["2"] :
+        strength < 81 ? icons["3"] : icons["4"]}
       ))))
 
 (defwidget network []
   (_network
-    :strength strength))
+    :strength strength
+  :offline "󰤭"))
